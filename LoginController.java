@@ -52,25 +52,5 @@ public class LoginController {
     }
     
  
-//   /**
-//    * @param id
-//    * @param model
-//    * @return
-//    */
-//   @PostMapping("/update")
-//   public String update(@Validated @ModelAttribute LoginRequest loginRequest,BindingResult result,Model model) {
-//       
-//   	if(result.hasErrors()) {
-//	      List<String> errorList = new ArrayList<String>();
-//	      for (ObjectError error : result.getAllErrors()) {
-//	          errorList.add(error.getDefaultMessage());
-//	        }
-//	      model.addAttribute("validationError", errorList);
-//	      return "/login/main/update";
-//   	}
-//       // ユーザー情報の更新
-//   	loginService.update(loginRequest);
-//       return "redirect:/main/";
-//   }
 
 }
