@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<header>
+				<div class ="contents">
+					<div class ="contents_left">
+						<h3>登録</h3>
+					</div>
+					
+					<div class ="contents_right">
+						<span th:text="${name}"></span>さん<br>
+						ログイン日時: <span th:text="${timestamp}"></span><br>
+						<input type="button" onclick="history.back()" value="ログアウト">
+					</div>
+					
+				</div>
+				
+				<hr class="hr1">
+				
+				<style>
+					h3 {
+						  color: red;
+					}
+					
+					.contents {
+						display: flex;
+						justify-content: space-between;
+					}
+					
+					.contents_right {
+						display: right;
+					}
+					
+				</style>
+			</header>
+			
+			<main>
+				<form th:action="@{user/RegisterConf}"　th:object="${user}" method="post">
+				  <label>氏名: <input type="text" name="name"></label><br>
+				  <label>メール: <input type="text" name="email"></label><br>
+				  <label>パスワード: <input type="text" name="password"></label><br>
+				  <label>パスワード: <input type="text" name="password"></label><br>
+				  <label>年齢: <input type="text" name="age"></label><br>
+				  <button type="submit">確認</button>
+				</form>
+				
+				<form th:action="@{/login/main}"method="get">
+					<button type="submit">戻る</button>
+				</form>
+
+	
+			</main>
+			
+			<footer>
+						<h5>Copyright © 2025</h5>
+						
+						<style>
+							footer{
+							            position: absolute;
+							            bottom: 0;
+							            display: flex;
+							            justify-content: flex-end;
+							            width: 100%;
+							        }
+						</style>
+</body>
+</html>
