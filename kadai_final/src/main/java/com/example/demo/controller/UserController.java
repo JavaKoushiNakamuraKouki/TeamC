@@ -42,7 +42,7 @@ public class UserController extends HttpServlet {
    
     
  //　ビューの表示
-    @GetMapping("/login")
+    @GetMapping("/")
     public String showLoginForm(Login login,Model model) {
         model.addAttribute("login",new Login());
         return "login/Login";
