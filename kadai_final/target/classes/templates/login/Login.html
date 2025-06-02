@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ログイン画面</title>
+</head>
+<body >
+	<header>
+		<h3 > ログイン</h3>
+		<hr class="hr1">
+		    
+		<style>
+			
+		     h3 {
+		              color: red;
+					  text-align: center;
+		        }
+		</style>
+		
+	</header>
+	
+	<main  >
+					
+		<form th:action="@{/login/main}" th:object="${login}" method="post">
+		        
+				<label for="name">名前:</label>
+		        <input type="text" th:field="*{name}" required><br>
+		        
+				<label for="password">パスワード:</label>
+		        <input type="password" th:field="*{password}" required><br>
+				
+				<div th:if="${error}">
+				           <p style="color:red;">[[${error}]]</p>
+				</div>
+		        
+				<button type="submit">ログイン</button>
+		</form>
+	</main>
+	
+	<footer>
+		<h5>Copyright © 2025</h5>
+		
+		<style>
+			footer{
+			            
+			            bottom: 0;
+			            display: flex;
+			            justify-content: flex-end;
+			            width: 100%;
+			        }
+		</style>
+	</footer>
+</body>
