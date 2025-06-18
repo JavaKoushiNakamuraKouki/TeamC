@@ -1,11 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+  <meta charset="UTF-8" />
+  <title>新規登録画面</title>
 </head>
 <body>
-	<h3>ユーザー登録</h3>
+  <h1>企業情報登録フォーム</h1>
+  <form th:action="@{/main/register/input}" th:object="${employeeForm}" method="post" onsubmit="return validatePasswords();">
+    <table>
+      <tr>
+        <td><label for="name">社員名：</label></td>
+        <td><input type="text" th:field="*{name}" required /></td>
+      </tr>
+      <tr>
+        <td><label for="age">年齢：</label></td>
+        <td><input type="number" th:field="*{age}" required /></td>
+      </tr>
+      <tr>
+        <td><label for="email">メールアドレス：</label></td>
+        <td><input type="email" th:field="*{email}" required /></td>
+      </tr>
+      <tr>
+        <td><label for="password">パスワード：</label></td>
+        <td><input type="password" th:field="*{password}" id="password" required /></td>
+      </tr>
+      <tr>
+        <td><label for="confirmPassword">パスワード確認：</label></td>
+        <td><input type="password" th:field="*{confirmPassword}" id="confirmPassword" required /></td>
+      </tr>
+    </table>
+    <div style="margin-top: 20px;">
+      <button type="submit" style="background-color: yellow;">確認</button>
+    </div>
+  </form>
 
+  <!-- コントローラー経由で戻る -->
+  <form th:action="@{/main/register/back}" method="post">
+    <button type="submit">戻る</button>
+  </form>
+
+  <script>
+    function validatePasswords() {
+      const password = document.getElementById('password').value;
+      const confirm = document.getElementById('confirmPassword').value;
+      if (password !== confirm) {
+        alert("パスワードが一致しません");
+        return false;
+      }
+      return true;
+    }
+  </script>
 </body>
 </html>

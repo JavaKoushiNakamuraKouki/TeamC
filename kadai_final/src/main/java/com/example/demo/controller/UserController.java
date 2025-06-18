@@ -7,19 +7,20 @@ import java.util.List;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.controller.form.EmployeeForm;
 import com.example.demo.model.Login;
 import com.example.demo.repository.LoginRepository;
 import com.example.demo.service.LoginService;
@@ -65,38 +66,59 @@ public class UserController {
 
     
  //情報登録
-//    @PostMapping("/main/register")
-//    public String insertMember(
-//    Model m,
-//    @RequestParam("name") String name,
-//    @RequestParam("age") String age,
-//    @RequestParam("email") String email,
-//    @RequestParam("password") String password
-//    ) {
-//    int numAge = Integer.parseInt(age);
-//    Login login = new Login(name,email,numAge,password);
-//    loginService.insert(login);
-//    m.addAttribute("msg","登録が正常に完了しました");
-//    return "login/Main";
-//    }
-
+ // 入力フォーム表示
     @GetMapping("/main/register")
-    public String register(Model model) {
-        model.addAttribute("user", new Login());
+    public String showForm(Model model) {
+        model.addAttribute("employeeForm", new EmployeeForm());
         return "user/Register";
     }
 
-    @PostMapping("/main/register/add")
-    public String addUser(@Validated @ModelAttribute("user") Login login,
-                          BindingResult result,Model model) {
-    	model.addAttribute("users", repository.findAll());
-        if (result.hasErrors()) {
-            return "login/Main";
+
+// 社員登録処理
+    @PostMapping("/main/register/input")
+    public String registerEmployee(@ModelAttribute("employeeForm") @Valid EmployeeForm employeeForm,
+                                   BindingResult result,
+                                   Model model) {
+
+        // パスワードと確認用パスワードの一致確認
+        if (!employeeForm.getPassword().equals(employeeForm.getConfirmPassword())) {
+            result.rejectValue("confirmPassword", "error.confirmPassword", "パスワードが一致しません");
         }
 
-        repository.save(login);
-        return "redirect:/login/Main"; 
+        // 入力エラーがある場合は再表示
+        if (result.hasErrors()) {
+            return "/main/register/";
+        }
+
+        // 登録処理実行
+        loginService.createEmployee(employeeForm);
+
+        return "/main/register/";
     }
+
+    // 「戻る」ボタンの処理
+    @PostMapping("user/Register/back")
+    public String backToPreviousPage() {
+        return "redirect:/main/register"; // 登録画面に戻る
+    }
+
+//    @GetMapping("/main/register")
+//    public String register(Model model) {
+//        model.addAttribute("user", new Login());
+//        return "user/Register";
+//    }
+//
+//    @PostMapping("/main/register/add")
+//    public String addUser(@Validated @ModelAttribute("user") Login login,
+//                          BindingResult result,Model model) {
+//    	model.addAttribute("users", repository.findAll());
+//        if (result.hasErrors()) {
+//            return "login/Main";
+//        }
+//
+//        repository.save(login);
+//        return "redirect:/login/Main"; 
+//    }
     
     
 //情報検索

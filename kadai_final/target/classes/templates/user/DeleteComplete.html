@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>削除完了</title>
+</head>
+<body>
+
+<h2 th:text="${msg}"></h2>
+
+<!-- 検索画面へ -->
+	<form th:action="@{/login/main/search}" method="get" style="display:inline;">
+    	<button type="submit">検索画面へ戻る</button>
+	</form>
+
+<!-- メイン画面へ -->
+	<form th:action="@{/login/main}" method="get" style="display:inline;">
+    	<button type="submit">メイン画面へ戻る</button>
+	</form>
+
+</body>
+</html>

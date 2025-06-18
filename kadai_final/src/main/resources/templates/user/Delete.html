@@ -1,29 +1,32 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>ユーザー情報削除</title>
+    <meta charset="UTF-8">
+    <title>削除確認</title>
 </head>
 <body>
-	<header>
-		
-		<main>
+    <h2>以下のユーザーを削除しますか？</h2>
 
-			
-		</main>
-		
-		<footer>
-					<h5>Copyright © 2025</h5>
-					
-					<style>
-						footer{
-						            position: absolute;
-						            bottom: 0;
-						            display: flex;
-						            justify-content: flex-end;
-						            width: 100%;
-						        }
-					</style>
+	<form method="post" action="/login/main/delete/executeMultiple">
+	    <table border="1">
+	        <tr>
+	            <th>ID</th><th>氏名</th><th>年齢</th>
+	        </tr>
+	        <tr th:each="user : ${deleteUsers}">
+	            <td th:text="${user.id}"></td>
+	            <td th:text="${user.name}"></td>
+	            <td th:text="${user.age}"></td>
+	        </tr>
+	    </table>
 
+	    <!-- hiddenでIDを送信 -->
+	    <div th:each="user : ${deleteUsers}">
+	        <input type="hidden" name="ids" th:value="${user.id}" />
+	    </div>
+
+	    <br>
+	    <button type="submit">削除</button>
+	    <button type="button" onclick="history.back()">戻る</button>
+	</form>
 </body>
 </html>

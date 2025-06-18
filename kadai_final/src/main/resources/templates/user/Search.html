@@ -1,10 +1,230 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>検索画面</title>
+    <meta charset="UTF-8">
+    <title>検索画面</title>
 </head>
 <body>
+	
+	<header>
+				<div class ="contents">
+					<div class ="contents_left">
+						<h3>社員検索</h3>
+					</div>
+					
+					<div class ="contents_right">
+						<span th:text="${name}"></span>さん<br>
+						ログイン日時: <span th:text="${timestamp}"></span><br>
+						<input type="button" onclick="history.back()" value="ログアウト">
+					</div>
+					
+				</div>
+				
+				<hr class="hr1">
+				
+				<style>
+					h3 {
+						  color: red;
+					}
+					
+					.contents {
+						display: flex;
+						justify-content: space-between;
+					}
+					
+					.contents_right {
+						display: right;
+					}
+					
+				</style>
+			</header>
+        <main>
+			
+			<form th:action="@{/login/main}" th:object="${user}" method="get">
+				   <button type="submit">メイン</button>
+			</form>
+			
+			<form th:action="@{/login/main/register}" th:object="${user}" method="get">
+				   <button type="submit">登録</button>
+			</form>
+			
+<!-- 検索フォーム -->
+          <form method="post" action="/login/main/search/selectByConditions">
+			  ID: <input type="text" name="id"><br>
+			  氏名: <input type="text" name="name"><br>
+			  年齢: <input type="number" name="ageF">～<input type="number" name="ageT"><br>
+  			  開始日：<input type="date" name="startF">～<input type="date" name="startT"><br>
+   			  終了日：<input type="date" name="endF">～<input type="date" name="endT"><br>
+   			 <button type="submit">検索</button>
+	     </form>
+
+<!-- 結果表示 -->
+       <form method="post" action="/login/main/delete">
+        <table border="1">
+         <tr>
+            <th>☑</th>
+            <th>ID</th>
+            <th>氏名</th>
+            <th>年齢</th>
+            <th>開始日</th>
+            <th>終了日</th>
+         </tr>
+         <tr th:each="member : ${member}">
+            <td>
+                <input type="checkbox" name="ids" th:value="${member.id}">
+            </td>
+            <td th:text="${member.id}"></td>
+            <td th:text="${member.name}"></td>
+            <td th:text="${member.age}"></td>
+            <td th:text="${member.start}"></td>
+            <td th:text="${member.end}"></td>
+        </tr>
+        </table>
+
+		<!-- データなし表示 -->
+		    <div th:if="${#lists.isEmpty(member)}">
+		         レコードがありません。
+		    </div>
+        <button type="submit">削除</button>
+       </form>
+	   <style>
+	   					.contents {
+	   						display: flex;
+	   						justify-content: space-between;
+	   					}
+
+	   					.contents_left{
+	   						margin-left: 2vw;
+	   					}
+
+	   					.contents_right {
+	   						display: right;
+	   						margin-right: 3vw;
+	   						line-height:2.5vw;
+	   					}
+	   					.contents_right input{
+	   						font-size: 1vw;
+	   						border-radius: 5px;
+	   						border: none;
+	   						margin-top: 0.5vw;
+	   						
+	   						
+	   					}
+	   					.contents_right input:hover{
+	   						color: white;
+	   						background-color: red;
+	   						border: none;
+	   						
+	   					}
+	   					
+	   					.form-group {
+	   					  margin-bottom: 15px;
+	   					}
+
+
+	   					h1{
+	   						color: red;
+	   					}
+	   					h5{
+	   						margin-right: 5vw;
+	   					}
+	   					main{
+	   						width: 100%;
+	   						margin: 0 auto;
+	   						align-items: center;
+	   					}
+	   					.form{
+	   						width: 70vw;
+	   						display: flex;
+	   						margin: 0 auto;
+	   						
+	   					}
+	   					.left{
+	   						width: 50%;
+	   						margin: 0 auto;
+	   					}
+	   					input[type="text"] {
+	   					  width: 22vw;
+	   					  padding: 10px;
+	   					  border: 1px solid #ccc;
+	   					  border-radius: 3px;
+	   					}
+	   					input[type="number"],
+	   					input[type="date"]{
+	   						width: 10vw;
+	   						padding: 10px;
+	   						border: 1px solid #ccc;
+	   						border-radius: 3px;
+	   					}
+
+	   					button[type="submit"] {
+	   					  width: 24.2vw;
+	   					  height: 3vw;
+	   					  margin-top: 1.3vw;
+	   					  margin-bottom: 1.3vw;
+	   					  font-size: 0.9vw;
+	   					  background-color:red;
+	   					  color: #fff;
+	   					  border: none;
+	   					  border-radius: 3px;
+	   					  cursor: pointer;
+	   					  
+	   					}
+	   					a{
+	   						text-decoration: none;
+	   						color: #fff;
+	   					}
+	   					.noline{
+	   						text-decoration:none;
+	   						color: #fff;
+	   					}
+	   					button:hover{
+	   						
+	   						
+	   						background-color: antiquewhite;
+	   						color: red;
+	   						font-size: 1vw;
+	   						font-weight: bold;
+	   					}
+	   					a:hover{
+	   						background-color: antiquewhite;
+	   						color: red;
+	   						font-size: 1vw;
+	   						font-weight: bold;
+	   						
+	   					}
+	   					.right{
+	   						width: 50%;
+	   						margin:0 auto;
+	   					}
+	   					label {
+	   					  display: block;
+	   					  font-weight: bold;
+	   					  margin-bottom: 5px;
+	   					}
+	   					.table{
+	   						margin-top: 10%;
+	   					}
+	   					table{
+	   						width: 23vw;
+	   					}
+						</style>
+
+</main>
+<footer>
+						<h5>Copyright © 2025</h5>
+						
+						<style>
+							footer{
+							            position: absolute;
+							            bottom: 0;
+							            display: flex;
+							            justify-content: flex-end;
+							            width: 100%;
+							        }
+						</style>
+			</footer>
+
 
 </body>
 </html>
