@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<header>
+					<div class ="contents">
+						<div class ="contents_left">
+							<h1>社員情報更新</h1>
+						</div>
+						
+						<div class ="contents_right">
+							<span th:text="${session.name}"></span>さん<br>
+							ログイン日時: <span th:text="${timestamp}"></span><br>
+							<input type="button" onclick="history.back()" value="ログアウト">
+						</div>
+						
+					</div>
+					
+					<hr class="hr1">
+					
+					<style>
+						h1 {
+							  color: red;
+						}
+						
+						.contents {
+							display: flex;
+							justify-content: space-between;
+						}
+						.contents_left{
+							margin-left: 2vw;
+						}
+
+						.contents_right {
+							display: right;
+							margin-right: 3vw;
+							line-height:2.5vw;
+						}
+						.contents_right input{
+							font-size: 1vw;
+							border-radius: 5px;
+							border: none;
+							margin-top: 0.5vw;
+							
+							
+						}
+						.contents_right input:hover{
+							color: white;
+							background-color: red;
+							border: none;
+							
+						}
+
+
+
+						
+						main {
+							  width: 60vw;
+							  
+							  margin:5vw auto 0 auto;
+							  padding: 20px;
+							  border-radius: 5px;
+							  }
+						.id{
+							width: fit-content;
+						}
+							  label {
+								
+							    
+							    font-weight: bold;
+							    padding-top: 10vw;
+								margin-right: 2vw;
+							    
+							  }		
+							 				  
+							  input[type="text"]{
+								width: 48vw;
+								padding: 10px;
+								border: 1px solid #ccc;
+								border-radius: 3px;
+								margin-bottom: 2vw;
+								
+							  }
+							   button[class="button"]{
+							    width: 90%;
+							    height: 3vw;
+							    margin-top: 1.3vw;
+							    font-size: 0.9vw;
+							    background-color:black;
+							    color: #fff;
+							    border: none;
+							    border-radius: 3px;
+							    cursor: pointer;
+							  }
+							  button[class="button"]:hover{
+							  	width: 90%;
+							  	
+							  	background-color: grey;
+							  	color: #fff;
+							  	font-size: 1vw;
+							  	font-weight: bold;
+							  }
+						button[type="submit"]{
+						  width: 90%;
+						  height: 3vw;
+						  margin-top: 1.3vw;
+						  font-size: 0.9vw;
+						  background-color:red;
+						  color: #fff;
+						  border: none;
+						  border-radius: 3px;
+						  cursor: pointer;
+						}
+						button:hover{
+							width: 90%;
+							
+							background-color: antiquewhite;
+							color: red;
+							font-size: 1vw;
+							font-weight: bold;
+						}
+						
+					</style>
+				</header>
+				
+				<main>
+					
+
+					  
+					<form th:action="@{/login/main/updateForm/update}" th:object="${user}" method="post">
+					 <div class="id">
+						<label for="id">id :</label>
+						<input type="text" th:field="*{id}">
+					 </div>
+
+
+					    <button class="button">更新</button>
+
+					</form>
+
+					<form th:action="@{/login/main}" th:object="${user}" method="get">
+						<button type="submit" >トップメニュへ</button>
+					</form>
+
+					
+		
+				</main>
+				<footer>
+					<div class="footer">
+						<h5>teamC Copyright © 2025</h5>
+					</div>
+					
+										
+										
+										<style>
+											.footer{
+												margin-left: 80vw;
+														
+											        }
+										</style>
+				</footer>
+
+</body>
+</html>

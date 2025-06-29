@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>検索画面</title>
+</head>
+<header>
+			
+<body>
+	
+	<header>
+				<div class ="contents">
+					<div class ="contents_left">
+						<h1>社員検索</h1>
+					</div>
+					
+					<div class ="contents_right">
+						<span th:text="${session.name}"></span>さん<br>
+						ログイン日時: <span th:text="${timestamp}"></span><br>
+						<input type="button" onclick="history.back()" value="ログアウト">
+					</div>
+					
+				</div>
+				
+				<hr class="hr1">
+				
+				<style>
+					.contents {
+						display: flex;
+						justify-content: space-between;
+					}
+
+					.contents_left{
+						margin-left: 2vw;
+					}
+
+					.contents_right {
+						display: right;
+						margin-right: 3vw;
+						line-height:2.5vw;
+					}
+					.contents_right input{
+						font-size: 1vw;
+						border-radius: 5px;
+						border: none;
+						margin-top: 0.5vw;
+						
+						
+					}
+					.contents_right input:hover{
+						color: white;
+						background-color: red;
+						border: none;
+						
+					}
+					
+					.form-group {
+					  margin-bottom: 15px;
+					}
+
+
+					h1{
+						color: red;
+					}
+					h5{
+						margin-right: 5vw;
+					}
+					main{
+						width: 100%;
+						margin: 0 auto;
+						align-items: center;
+					}
+					.form{
+						width: 70vw;
+						display: flex;
+						margin: 0 auto;
+						
+					}
+					.left{
+						width: 50%;
+						margin: 0 auto;
+					}
+					input[type="text"] {
+					  width: 22vw;
+					  padding: 10px;
+					  border: 1px solid #ccc;
+					  border-radius: 3px;
+					}
+					input[type="number"],
+					input[type="date"]{
+						width: 10vw;
+						padding: 10px;
+						border: 1px solid #ccc;
+						border-radius: 3px;
+					}
+
+					button[type="submit"] {
+					  width: 24.2vw;
+					  height: 3vw;
+					  margin-top: 1.3vw;
+					  margin-bottom: 1.3vw;
+					  font-size: 0.9vw;
+					  background-color:red;
+					  color: #fff;
+					  border: none;
+					  border-radius: 3px;
+					  cursor: pointer;
+					  
+					}
+					button[class="delete"] {
+					  width: 24.2vw;
+					  height: 3vw;
+					  margin-top: 1.3vw;
+					  margin-bottom: 1.3vw;
+					  font-size: 0.9vw;
+					  background-color:black;
+					  color: #fff;
+					  border: none;
+					  border-radius: 3px;
+					  cursor: pointer;
+					  
+					}
+					a{
+						text-decoration: none;
+						color: #fff;
+					}
+					.noline{
+						text-decoration:none;
+						color: #fff;
+					}
+					button:hover{
+						
+						
+						background-color: antiquewhite;
+						color: red;
+						font-size: 1vw;
+						font-weight: bold;
+					}
+					button[class="delete"]:hover{
+						
+						
+						background-color: grey;
+						color: #fff;
+						font-size: 1vw;
+						font-weight: bold;
+					}
+					a:hover{
+						background-color: antiquewhite;
+						color: red;
+						font-size: 1vw;
+						font-weight: bold;
+						
+					}
+					.right{
+						width: 50%;
+						margin:0 auto;
+					}
+					label {
+					  display: block;
+					  font-weight: bold;
+					  margin-bottom: 5px;
+					}
+					.table{
+						margin-top: 10%;
+					}
+					table{
+						width: 23vw;
+					}
+
+
+
+					
+				</style>
+			</header>
+			
+			 <main >
+			
+				<div class="form">
+					<!-- 検索フォーム -->
+					               <div class="left">
+									<form method="post" action="/login/main/search/selectByConditions">
+									  <p>ID</p>  <input type="text" name="id"><br>
+									   <P>氏名</P><input type="text" name="name"><br>
+									   <p>年齢</p> <input type="number" name="ageF">～<input type="number" name="ageT"><br>
+									   <P>開始日</P><input type="date" name="startF">～<input type="date" name="startT"><br>
+									   <p>終了日</p><input type="date" name="endF">～<input type="date" name="endT"><br>
+									   <button type="submit">検索</button>
+									   
+									 </form>
+
+								   </div>
+
+
+					<!-- 結果表示 -->
+					               <div class="right">
+									<div class="table">
+										<form method="post" action="/login/main/delete">
+										 <table border="1">
+										   <tr>
+											<th>☑</th>
+											<th>ID</th>
+											<th>氏名</th>
+											<th>年齢</th>
+											<th>開始日</th>
+											<th>終了日</th>
+										</tr>
+										   <tr th:each="member : ${member}">
+											<td>
+											    <input type="checkbox" name="ids" th:value="${member.id}">
+											
+											
+											</td>
+											<td th:text="${member.id}"></td>
+											<td th:text="${member.name}"></td>
+											<td th:text="${member.age}"></td>
+											<td th:text="${member.start}"></td>
+											<td th:text="${member.end}"></td>
+
+										   </tr>
+										   </table> 
+									</div>
+
+
+									<!-- データなし表示 -->
+									    <div th:if="${#lists.isEmpty(member)}">
+									         レコードがありません。
+									    </div>
+										<div class="noline">
+											<button class="delete" type="submit">削除</a></button>
+										</div>
+									 
+									</form>
+
+								   </div>
+					
+				</div>
+
+
+</main>
+<footer>
+	<div class="footer">
+		<h5>teamC Copyright © 2025</h5>
+	</div>
+	
+						
+						
+						<style>
+							.footer{
+								margin-left: 80vw;
+										
+							        }
+						</style>
+</footer>
+
+
+</body>
+</html>

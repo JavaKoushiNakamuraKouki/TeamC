@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>削除確認</title>
+</head>
+<header>
+				<div class ="contents">
+					<div class ="contents_left">
+						<h1>社員情報削除</h1>
+					</div>
+					
+					<div class ="contents_right">
+						<span th:text="${session.name}"></span>さん<br>
+						ログイン日時: <span th:text="${timestamp}"></span><br>
+						<input type="button" onclick="history.back()" value="ログアウト">
+					</div>
+					
+				</div>
+				
+				<hr class="hr1">
+				
+				<style>
+					.contents {
+						display: flex;
+						justify-content: space-between;
+					}
+					
+					.contents_left{
+						margin-left: 2vw;
+					}
+
+					.contents_right {
+						display: right;
+						margin-right: 3vw;
+						line-height:2.5vw;
+					}
+					.contents_right input{
+						font-size: 1vw;
+						border-radius: 5px;
+						border: none;
+						margin-top: 0.5vw;
+						
+						
+					}
+					.contents_right input:hover{
+						color: white;
+						background-color: red;
+						border: none;
+						
+					}
+					main {
+					  width: 60vw;
+					  
+					  margin: 0 auto;
+					  padding: 20px;
+					  border-radius: 5px;
+					  
+					}
+					.form-group {
+					  margin-bottom: 15px;
+					}
+
+					label {
+					  display: block;
+					  font-weight: bold;
+					  margin-bottom: 5px;
+					}
+					tr{
+						width: 100%;
+					}
+					.id{
+					  width: 20vw;
+					  padding: 10px;
+					  border-radius: 3px;
+					}
+					.name{
+						width: 60vw;
+						padding: 10px;
+						border-radius: 3px;
+						
+					}
+					.age{
+						width: 20vw;
+						padding: 10px;
+						border-radius: 3px;
+						
+					}
+					td{
+						padding: 10px;
+						text-align: center;
+					}
+					 button[class="delete"]{
+					  width: 100%;
+					  height: 3vw;
+					  margin-top: 1.3vw;
+					  font-size: 0.9vw;
+					  background-color:black;
+					  color: #fff;
+					  border: none;
+					  border-radius: 3px;
+					  cursor: pointer;
+					}
+
+					 button[class="button"]{
+					  width: 100%;
+					  height: 3vw;
+					  margin-top: 1.3vw;
+					  font-size: 0.9vw;
+					  background-color:red;
+					  color: #fff;
+					  border: none;
+					  border-radius: 3px;
+					  cursor: pointer;
+					}
+					button[class="delete"]:hover{
+						width: 100%;
+						
+						background-color: grey;
+						color: #fff;
+						font-size: 1vw;
+						font-weight: bold;
+					}
+					button:hover{
+						width: 100%;
+						
+						background-color: antiquewhite;
+						color: red;
+						font-size: 1vw;
+						font-weight: bold;
+					}
+					h1{
+						  color: red;
+					}
+					h1.p{
+						color: black;
+						text-align: center;
+					}
+					h5{
+						margin-right: 5vw;
+					}
+
+					
+	
+				</style>
+			</header>
+<body>
+	<main>
+		<h1 class="p">以下のユーザーを削除しますか？</h1>
+
+		<form method="post" th:action="@{/login/main/delete/executeMultiple}" >
+			<div>
+				<table border="1">
+				    <tr>
+				        <th class="id">ID</th>
+						<th class="name">氏名</th>
+						<th class="age">年齢</th>
+				    </tr>
+					<tr th:each="user : ${deleteUsers}">
+				    
+				        <td th:text="${user.id}"></td>
+				        <td th:text="${user.name}"></td>
+				        <td th:text="${user.age}"></td>
+				    </tr>
+				</table>
+			</div>
+
+
+		    <!-- hiddenでIDを送信 -->
+		    <div th:each="user : ${deleteUsers}">
+		        <input type="hidden" name="ids" th:value="${user.id}" />
+		    </div>
+
+		    <br>
+			
+
+				<button class="delete" type="submit">削除</button>
+				<button class="button" type="button" onclick="history.back()">戻る</button>
+			
+		</form>
+		
+	</main>
+	<footer>
+		<h5> teamC Copyright © 2025</h5>
+		
+		<style>
+			footer{
+			            padding-top: 10vw;
+			            bottom: 0;
+			            display: flex;
+			            justify-content: flex-end;
+			            width: 100%;
+			        }
+		</style>
+	</footer>
+
+</body>
+</html>

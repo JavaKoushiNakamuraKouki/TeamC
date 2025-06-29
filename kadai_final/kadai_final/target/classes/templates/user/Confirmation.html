@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<title>社員情報確認画面</title>
+</head>
+<body>
+	<h1>社員情報登録（確認）</h1>
+	<form th:action="@{/login/main/register/complete}" th:object="${employeeForm}" method="post">
+		<table>
+			<tr>
+				<td><strong>社員名：</strong></td>
+				<td th:text="*{name}"></td>
+			</tr>
+			<tr>
+				<td><strong>年齢：</strong></td>
+				<td th:text="*{age}"></td>
+			</tr>
+			<tr>
+				<td><strong>メールアドレス：</strong></td>
+				<td th:text="*{email}"></td>
+			</tr>
+		</table>
+		
+		<!--		※これを追加することで、確認画面 → 登録処理に進む際に、入力値が保持されるようになる-->
+		<input type="hidden" th:field="*{name}" />
+		<input type="hidden" th:field="*{age}" />
+		<input type="hidden" th:field="*{email}" />
+		<input type="hidden" th:field="*{password}" />
+		<input type="hidden" th:field="*{confirmPassword}" />
+		<div style="margin-top: 20px;">
+			<button type="submit" style="background-color: yellow;">登録</button>
+		</div>
+	</form>
+	<!-- 修正画面に戻る -->
+	<form th:action="@{/login/main/register}" method="get">
+		<button type="submit">修正する</button>
+	</form>
+</body>
+</html>
