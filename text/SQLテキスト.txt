@@ -1,0 +1,9 @@
+CREATE TABLE loginuser (
+  id int PRIMARY KEY AUTO_INCREMENT,
+  name varchar(30),
+  age int,
+  password char(10),
+  email varchar(100),
+  start date,
+  end date
+);
