@@ -1,7 +1,7 @@
 package com.example.demo.service;
-
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,11 @@ public class LoginService {
     }
     
     public Login findById(Long id) {
-        return loginRepository.findById(id).orElse(null); // null対応推奨
+        return loginRepository.findById(id).orElse(null); 
+    }
+    //ログイン
+    public Optional<Login>sarchUserByName(String name){
+    	return loginRepository.findByName(name);
     }
     
     // 検索処理

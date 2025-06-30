@@ -8,51 +8,142 @@
   <header>
     <div class="contents">
       <div class="contents_left">
-        <h3>社員情報更新</h3>
+        <h1>社員情報更新</h1>
       </div>
       <div class="contents_right">
-        <span th:text="${name}"></span>さん<br>
+        <span th:text="${session.name}"></span>さん<br>
         ログイン日時: <span th:text="${timestamp}"></span><br>
         <input type="button" onclick="history.back()" value="ログアウト">
       </div>
     </div>
     <hr class="hr1">
     <style>
-      h3 { color: red; }
+      h1 { color: red; }
       .contents {
         display: flex;
         justify-content: space-between;
       }
+	  .contents_left{
+	  	margin-left: 2vw;
+	  }
+
+	  .contents_right {
+	  	display: right;
+	  	margin-right: 3vw;
+	  	line-height:2.5vw;
+	  }
+	  .contents_right input{
+	  	font-size: 1vw;
+	  	border-radius: 5px;
+	  	border: none;
+	  	margin-top: 0.5vw;
+	  	
+	  	
+	  }
+	  .contents_right input:hover{
+	  	color: white;
+	  	background-color: red;
+	  	border: none;
+	  	
+	  }
+	  main {
+	  	  width: 60vw;
+	  	  
+	  	  margin:5vw auto 0 auto;
+	  	  padding: 20px;
+	  	  border-radius: 5px;
+	  	  }
+		  .form{
+		  	width: fit-content;
+		  	margin:1vw auto 2vw auto; 
+		  	
+		  }
+		  .id{
+		  	width: fit-content;
+		  }
+		  label {
+			display: inline-block;
+			width: 150px;
+			vertical-align: top;
+		    font-weight: bold;
+		  margin-right: 2vw;
+		    
+		  }		
+		  			  
+		  input[type="text"],
+		  [type="password"]{
+		  width: 45vw;
+		  padding: 10px;
+		  border: 1px solid #ccc;
+		  border-radius: 3px;
+		  margin-bottom: 2vw;
+
+		  }
+	  button[type="submit"] {
+	    width: 100%;
+	    height: 3vw;
+	    
+	    margin-top: 1.3vw;
+	    font-size: 0.8vw;
+	    background-color:red;
+	    color: #fff;
+	    border: none;
+	    border-radius: 3px;
+	    cursor: pointer;
+	  }
+	  button:hover{
+	  	width: 100%;
+	  	margin-top: 1.3vw;
+	  	
+	  	background-color: antiquewhite;
+	  	color: red;
+	  	font-size: 1vw;
+	  	font-weight: bold;
+	  }
+
     </style>
   </header>
 
   <main>
-    <form th:action="@{/login/main}" method="get">
-      <button type="submit">メイン</button>
-    </form>
+	
+   
 
     <form th:action="@{/login/main/updateForm/update/uComp}" th:object="${user}" method="post">
-	  id:<input type="text" th:field="*{id}"><br>
-      社員名: <input type="text" th:field="*{name}" /><br>
-      メールアドレス: <input type="text" th:field="*{email}" /><br>
-      年齢: <input type="text" th:field="*{age}" /><br>
-      パスワード: <input type="password" th:field="*{password}" /><br>
+		<div  class="form">
+			<label for="id">id :</label> <input type="text" th:field="*{id}"><br>
+			<label for="id">社員名 :</label> <input type="text" th:field="*{name}" /><br>
+			<label for="id">メールアドレス :</label> <input type="text" th:field="*{email}" /><br>
+			<label for="id">年齢 :</label> <input type="text" th:field="*{age}" /><br>
+			<label for="id">パスワード :</label> <input type="password" th:field="*{password}" /><br>
+
+		</div >
 
       <button type="submit">更新</button>
     </form>
+	<form th:action="@{/login/main}" method="get">
+		   <button type="submit">トップメニュー</button>
+		 </form>
   </main>
 
   <footer>
-    <h5>Copyright © 2025</h5>
-    <style>
-      footer {
-        position: absolute;
-        bottom: 0;
-        display: flex;
-        justify-content: flex-end;
-        width: 100%;
-      }
-    </style>
-  </footer>
+   	<div class="footer">
+   		<h5>teamC Copyright © 2025</h5>
+   	</div>
+   	
+   						
+   						
+   						<style>
+  						h5{
+  							margin-right: 5vw;
+  							}
+  							footer{
+  							            padding-top: 10vw;
+  							            bottom: 0;
+  							            display: flex;
+  							            justify-content: flex-end;
+  							            width: 100%;
+  							        }
+   						</style>
+   </footer>
 </body>
 </html>

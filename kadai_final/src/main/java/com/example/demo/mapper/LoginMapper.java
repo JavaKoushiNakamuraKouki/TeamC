@@ -71,7 +71,7 @@ public interface LoginMapper {
 	})
 	List<Login> findByIds(@Param("ids") List<Long> ids);
 	
-//除法更新	
+//情報更新	
 	@Update("UPDATE loginuser SET name = #{name}, email = #{email}, age = #{age}, password = #{password}, end = NOW() WHERE id = #{id}")
 	void update(Login login);
 	

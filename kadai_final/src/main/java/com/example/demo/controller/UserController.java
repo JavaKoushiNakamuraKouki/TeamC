@@ -1,7 +1,8 @@
 package com.example.demo.controller;
 
-
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -48,78 +49,103 @@ public class UserController {
         model.addAttribute("login", new Login());
         return "login/Login";
     }
-
     @PostMapping("/main")
-    public String login(@RequestParam String name,@RequestParam String password,
+//ログイン処理
+    public String login(
+    		             @RequestParam String name,
+    		            @RequestParam String password,
+    		            Login login, Model model,
                         HttpServletRequest request,HttpServletResponse response) throws Exception {
         request.setCharacterEncoding("UTF-8");
+        var Login=loginService.sarchUserByName(login.getName());
+    	var isCorrectUserAuth =Login.isPresent()
+    			&&login.getPassword().equals(Login.get().getPassword());
 
-        if (!name.isEmpty()) {
+        if (isCorrectUserAuth) {
             HttpSession session = request.getSession();
+            LocalDateTime loginTime = LocalDateTime.now();
+            request.getSession().setAttribute("loginTime", loginTime);
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/mm/yyyy HH:mm:ss");
+//            String formattedDate = loginTime.format(formatter);
             session.setMaxInactiveInterval(1800);
             session.setAttribute("name", name);
-            return "login/Main";        } else {
-            request.setAttribute("error", "ユーザID または パスワードに 誤りがあります。");
+            session.setAttribute("loginTime", loginTime .format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")));
+            
+            return "login/Main";
+            } else {
+            	model.addAttribute("error", "ユーザID ,ユーザName または パスワードに 誤りがあります。");
             return "login/Login";
         }
     }
 
-    
- //情報登録
- // 入力フォーム表示
-    @GetMapping("/main/register")
-    public String showForm(Model model) {
-        model.addAttribute("employeeForm", new EmployeeForm());
-        return "user/Register";
+  // ログアウト処理（POST）
+    @PostMapping("/logout")
+    public String logout(HttpSession session) {
+        // セッションを無効化
+        session.invalidate();
+        // ログイン画面にリダイレクト
+        return "login/Login";
     }
 
+//    @PostMapping("/main")
+//    public String login(@RequestParam String name,@RequestParam String password,
+//                        HttpServletRequest request,HttpServletResponse response) throws Exception {
+//        request.setCharacterEncoding("UTF-8");
+//
+//        if (!name.isEmpty()) {
+//            HttpSession session = request.getSession();
+//            session.setMaxInactiveInterval(1800);
+//            session.setAttribute("name", name);
+//            return "login/Main";        } else {
+//            request.setAttribute("error", "ユーザID または パスワードに 誤りがあります。");
+//            return "login/Login";
+//        }
+//    }
 
-// 社員登録処理
-    @PostMapping("/main/register/input")
-    public String registerEmployee(@ModelAttribute("employeeForm") @Valid EmployeeForm employeeForm,
+    
+ //情報登録
+  // 入力フォーム表示
+  @GetMapping("/main/register")
+  public String showForm(Model model) {
+      model.addAttribute("employeeForm", new EmployeeForm());
+      return "user/Register";
+  }
+  
+  // 確認画面表示
+  @PostMapping("/main/register/confirm")
+  public String registerConfirm(@ModelAttribute("employeeForm") @Valid EmployeeForm employeeForm,
+                                BindingResult result,
+                                Model model) {
+      if (result.hasErrors()) {
+          return "user/Register"; // エラー時は入力画面へ戻す
+      }
+      return "user/Confirmation"; // 確認画面へ遷移
+  }
+    // 社員登録処理（完了画面へ）
+    @PostMapping("/main/register/complete")
+    public String registerComplete(@ModelAttribute("employeeForm") @Valid EmployeeForm employeeForm,
                                    BindingResult result,
                                    Model model) {
-
+        // パスワードの `null` チェック
+        if (employeeForm.getPassword() == null || employeeForm.getConfirmPassword() == null) {
+            result.rejectValue("password", "error.password", "パスワードを入力してください");
+            return "user/Confirmation"; // 確認画面へ戻る
+        }
         // パスワードと確認用パスワードの一致確認
         if (!employeeForm.getPassword().equals(employeeForm.getConfirmPassword())) {
             result.rejectValue("confirmPassword", "error.confirmPassword", "パスワードが一致しません");
+            return "user/Confirmation"; // 確認画面へ戻る
         }
-
-        // 入力エラーがある場合は再表示
-        if (result.hasErrors()) {
-            return "/main/register/";
-        }
-
         // 登録処理実行
         loginService.createEmployee(employeeForm);
-
-        return "/main/register/";
+        return "user/Thanks"; // 完了画面へ
     }
-
-    // 「戻る」ボタンの処理
-    @PostMapping("user/Register/back")
+    // 「戻る」ボタンの処理（入力フォームへ）
+    @PostMapping("/main/register/back")
     public String backToPreviousPage() {
-        return "redirect:/main/register"; // 登録画面に戻る
+        return "redirect:/main/Register"; // 登録画面に戻る
     }
 
-//    @GetMapping("/main/register")
-//    public String register(Model model) {
-//        model.addAttribute("user", new Login());
-//        return "user/Register";
-//    }
-//
-//    @PostMapping("/main/register/add")
-//    public String addUser(@Validated @ModelAttribute("user") Login login,
-//                          BindingResult result,Model model) {
-//    	model.addAttribute("users", repository.findAll());
-//        if (result.hasErrors()) {
-//            return "login/Main";
-//        }
-//
-//        repository.save(login);
-//        return "redirect:/login/Main"; 
-//    }
-    
     
 //情報検索
     @GetMapping("/main/search")

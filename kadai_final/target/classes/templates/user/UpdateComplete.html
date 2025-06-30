@@ -9,54 +9,118 @@
   <header>
     <div class="contents">
       <div class="contents_left">
-        <h3>更新完了</h3>
+        <h1>更新完了</h1>
       </div>
       <div class="contents_right">
-        <span th:text="${name}"></span>さん<br>
+        <span th:text="${session.name}"></span>さん<br>
         ログイン日時: <span th:text="${timestamp}"></span><br>
         <input type="button" onclick="history.back()" value="ログアウト">
       </div>
     </div>
     <hr class="hr1">
     <style>
-      h3 {
+      h1 {
         color: red;
       }
+	  
       .contents {
         display: flex;
         justify-content: space-between;
       }
-      .contents_right {
-        display: right;
-      }
+	  .contents_left{
+	  	margin-left: 2vw;
+	  }
+
+	  .contents_right {
+	  	display: right;
+	  	margin-right: 3vw;
+	  	line-height:2.5vw;
+	  }
+	  .contents_right input{
+	  	font-size: 1vw;
+	  	border-radius: 5px;
+	  	border: none;
+	  	margin-top: 0.5vw;
+	  	
+	  	
+	  }
+	  .contents_right input:hover{
+	  	color: white;
+	  	background-color: red;
+	  	border: none;
+	  	
+	  }
+
+	  main {
+	  	  width: 60vw;
+	  	  
+	  	  margin:5vw auto 0 auto;
+	  	  padding: 20px;
+	  	  border-radius: 5px;
+	  	  }
+		  
+		h1.p{
+			color: black;
+			text-align: center;
+		}
+
+		  button[type="submit"] {
+			display: block;
+			margin: 1.3vw auto 0 auto;
+		    width: 60%;
+		    height: 3vw;
+		    font-size: 0.9vw;
+		    background-color:red;
+		    color: #fff;
+		    border: none;
+		    border-radius: 3px;
+		    cursor: pointer;
+		  }
+		  button:hover{
+			text-align: center;
+		  	width: 60%;
+		  	background-color: antiquewhite;
+		  	color: red;
+		  	font-size: 1vw;
+		  	font-weight: bold;
+		  }
+
     </style>
   </header>
 
   <main>
-    <h2 th:text="${msg}">情報が更新されました。</h2>
+    <h1 class="p" th:text="${msg}">情報が更新されました。</h1>
 
     <!-- メイン画面 -->
     <form th:action="@{/login/main}" method="get" style="display:inline;">
-      <button type="submit">メイン画面へ</button>
+      <button type="submit">トップメニュへ</button>
     </form>
 
     <!-- 検索画面 -->
-    <form th:action="@{/login/main/search}" method="get" style="display:inline;">
+    <form th:action="@{/login/main/search}" method="post" style="display:inline;">
       <button type="submit">検索画面へ</button>
     </form>
   </main>
 
   <footer>
-    <h5>Copyright © 2025</h5>
-    <style>
-      footer {
-        position: absolute;
-        bottom: 0;
-        display: flex;
-        justify-content: flex-end;
-        width: 100%;
-      }
-    </style>
+  	<div class="footer">
+  		<h5>teamC Copyright © 2025</h5>
+  	</div>
+  	
+  						
+  						
+  						<style>
+							h5{
+								margin-right: 5vw;
+								}
+								footer{
+								            padding-top: 10vw;
+								            bottom: 0;
+								            display: flex;
+								            justify-content: flex-end;
+								            width: 100%;
+								        }
+  						</style>
   </footer>
 
 </body>

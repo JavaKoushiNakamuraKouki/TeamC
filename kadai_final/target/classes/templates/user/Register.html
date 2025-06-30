@@ -5,8 +5,8 @@
   <title>新規登録画面</title>
 </head>
 <body>
-  <h1>企業情報登録フォーム</h1>
-  <form th:action="@{/main/register/input}" th:object="${employeeForm}" method="post" onsubmit="return validatePasswords();">
+  <h1>社員情報登録（入力）</h1>
+  <form th:action="@{/login/main/register/confirm}" th:object="${employeeForm}" method="post" onsubmit="return validatePasswords();">
     <table>
       <tr>
         <td><label for="name">社員名：</label></td>
@@ -33,12 +33,10 @@
       <button type="submit" style="background-color: yellow;">確認</button>
     </div>
   </form>
-
   <!-- コントローラー経由で戻る -->
-  <form th:action="@{/main/register/back}" method="post">
+  <form th:action="@{/login/main/register/back}" method="post">
     <button type="submit">戻る</button>
   </form>
-
   <script>
     function validatePasswords() {
       const password = document.getElementById('password').value;

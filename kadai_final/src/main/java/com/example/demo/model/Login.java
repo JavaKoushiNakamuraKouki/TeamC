@@ -42,8 +42,7 @@ public class Login {
 //    @NotBlank(message = "{NotNull.required-field-email}")
     private String email;
 //    @NotBlank(message = "{NotNull.required-field-password}")
-	@Max(150)
-	@Min(0)
+
     private String password;
 	@CreatedDate
 	private LocalDate start;
